@@ -496,10 +496,10 @@ class AsyncChain(CommonChain):
                                 old_slipstream_factory_addr=self.settings.old_slipstream_factory_addr)
         execute = self.swapper.functions.execute(planner.commands, planner.inputs)
         if from_token.wrapped_token_address:  # native: swapper wraps msg.value to WETH
-            return [await self.build_tx(execute, value=quote.input.amount_in)]
+            return [self.build_tx(execute, value=quote.input.amount_in)]
         # ERC20 (incl. WETH): approve the wrapped token to the swapper, then execute with value=0
         approval_tx = await self.set_token_allowance(from_token, swapper, quote.input.amount_in)
-        main = await self.build_tx(execute)
+        main = self.build_tx(execute)
         return [t for t in (approval_tx, main) if t is not None]
 
     @require_async_context
