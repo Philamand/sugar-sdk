@@ -447,7 +447,7 @@ class AsyncChain(CommonChain):
 
     @require_async_context
     @alru_cache(maxsize=None)
- async def get_latest_pool_epochs(self) -> List[LiquidityPoolEpoch]:
+    async def get_latest_pool_epochs(self) -> List[LiquidityPoolEpoch]:
         raw_epochs = await self.apaginate(self.sugar_rewards.functions.epochsLatest)
         if not raw_epochs: return []
         tokens = await self.get_all_tokens(listed_only=False)
@@ -1371,7 +1371,7 @@ _base_settings = make_base_chain_settings()
 class BaseChainCommon():
     usdc: Token = Token(chain_id=_base_settings.chain_id, chain_name=_base_settings.chain_name,
                         token_address='0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913', symbol='USDC', decimals=6, listed=True, wrapped_token_address=None)
-    aero: Token = Token(chain_id=_base_settings.chain_id, chain_name=_op_settings.chain_name,
+    aero: Token = Token(chain_id=_base_settings.chain_id, chain_name=_base_settings.chain_name,
                         token_address='0x940181a94A35A4569E4529A3CDfB74e38FD98631', symbol='AERO', decimals=18, listed=True, wrapped_token_address=None)
     eth: Token = Token(chain_id=_base_settings.chain_id, chain_name=_base_settings.chain_name,
                        token_address='ETH', symbol='ETH', decimals=18, listed=True, wrapped_token_address='0x4200000000000000000000000000000000000006')
